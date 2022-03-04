@@ -24,15 +24,27 @@ export function TaskList() {
       isComplete: false,
     };
 
-    setTasks((prevState) => [...prevState, newTask]);
+    setTasks(prevState => [...prevState, newTask]);
+    setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const updatedTasks = tasks.map(task => ({ ...task }));
+    const taskToUpdate = updatedTasks.find(task => task.id === id);
+
+    if (!taskToUpdate) return;
+
+    taskToUpdate.isComplete = !taskToUpdate.isComplete;
+
+    setTasks(updatedTasks);
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+    const filteredTasks = tasks.filter(task => task.id !== id);
+
+    setTasks(filteredTasks);
   }
 
   return (
